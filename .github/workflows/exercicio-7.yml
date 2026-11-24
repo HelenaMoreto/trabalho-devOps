@@ -1,0 +1,36 @@
+name: Exercicio 7 - Variaveis de CI
+on:
+  push:
+    branches: [exercicio-7-variaveis]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: exercicio-7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Demonstrar falha no modo rigido
+        shell: bash
+        run: |
+          if npm run build:strict; then
+            echo 'O modo rigido deveria falhar com o aviso.'
+            exit 1
+          fi
+          echo 'Falha esperada confirmada.'
+      - name: Build com CI=false
+        run: npm run build
+      - name: Validar arquivos de producao
+        run: test -s dist/index.html
+      - name: Disponibilizar build
+        uses: actions/upload-artifact@v4
+        with:
+          name: exercicio-7-build
+          path: exercicio-7/dist/
