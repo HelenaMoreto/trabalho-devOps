@@ -1,0 +1,9 @@
+{
+  "name": "exercicio-7-variaveis",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "CI=false node build.mjs",
+    "build:strict": "CI=true node build.mjs"
+  }
+}
