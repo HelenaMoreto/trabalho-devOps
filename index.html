@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfólio profissional de uma desenvolvedora web com foco em experiências digitais e segurança.">
+  <meta name="theme-color" content="#0a1020">
+  <title>Portfólio | Desenvolvimento & Segurança</title>
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="#inicio" class="brand" aria-label="Ir para início"><span class="brand-icon">&lt;/&gt;</span> meu<span>portfólio</span></a>
+    <nav aria-label="Navegação principal">
+      <a href="#sobre">Sobre</a>
+      <a href="#habilidades">Habilidades</a>
+      <a href="#projetos">Projetos</a>
+      <a class="nav-contact" href="#contato">Contato ↗</a>
+    </nav>
+  </header>
+
+  <main id="inicio">
+    <section class="hero container" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> Disponível para novos desafios</p>
+        <h1 id="hero-title">Construindo o <span>digital</span> com criatividade e código.</h1>
+        <p class="intro">Olá! Sou <strong>Helena</strong>, estudante de tecnologia e desenvolvedora em formação. Gosto de transformar ideias em projetos úteis, bonitos e funcionais.</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#projetos">Explorar projetos <span aria-hidden="true">↗</span></a>
+          <a class="button secondary" href="#contato">Entrar em contato</a>
+        </div>
+        <div class="hero-tags"><span>Desenvolvimento Web</span><span>UI/UX</span><span>Cibersegurança</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <img src="images/hero.svg" alt="" width="520" height="500">
+      </div>
+    </section>
+
+    <section class="section about" id="sobre" aria-labelledby="about-title">
+      <div class="container split">
+        <div><p class="section-kicker">01 / SOBRE MIM</p><h2 id="about-title">Tecnologia com <span>propósito.</span></h2></div>
+        <div class="section-text"><p>Tenho interesse em desenvolvimento de interfaces, lógica de programação, automação e segurança da informação. Procuro aprender criando projetos práticos, testando ideias e melhorando a experiência de quem usa cada solução.</p><p>Este portfólio também demonstra um processo de entrega com integração contínua, verificações de qualidade e publicação automática via GitHub Actions.</p></div>
+      </div>
+    </section>
+
+    <section class="section skills container" id="habilidades" aria-labelledby="skills-title">
+      <p class="section-kicker">02 / O QUE EU UTILIZO</p>
+      <h2 id="skills-title">Habilidades <span>técnicas.</span></h2>
+      <div class="skills-grid">
+        <article class="skill-card"><span class="skill-symbol" aria-hidden="true">{ }</span><h3>Front-end</h3><p>HTML5, CSS3, JavaScript e interfaces responsivas.</p></article>
+        <article class="skill-card"><span class="skill-symbol" aria-hidden="true">⌘</span><h3>Programação</h3><p>Python, C, lógica e resolução de problemas.</p></article>
+        <article class="skill-card"><span class="skill-symbol" aria-hidden="true">◈</span><h3>Segurança</h3><p>Fundamentos de SOC, análise de incidentes e boas práticas.</p></article>
+        <article class="skill-card"><span class="skill-symbol" aria-hidden="true">⇄</span><h3>DevOps</h3><p>Git, GitHub, automação de testes e pipelines CI/CD.</p></article>
+      </div>
+    </section>
+
+    <section class="section projects" id="projetos" aria-labelledby="projects-title">
+      <div class="container">
+        <p class="section-kicker">03 / TRABALHOS</p><h2 id="projects-title">Projetos em <span>destaque.</span></h2>
+        <div class="project-grid">
+          <article class="project-card"><div class="project-image"><img src="images/project-code.svg" alt="Ilustração de painel de programação" loading="lazy" width="620" height="350"></div><div class="project-content"><p class="project-type">WEB • EDUCAÇÃO</p><h3>Zero Code</h3><p>Jogo educacional investigativo que combina tecnologia, lógica e resolução de desafios.</p><span class="project-tech">HTML • CSS • JavaScript</span></div></article>
+          <article class="project-card"><div class="project-image"><img src="images/project-security.svg" alt="Ilustração abstrata de painel de segurança digital" loading="lazy" width="620" height="350"></div><div class="project-content"><p class="project-type">GAMES • SEGURANÇA</p><h3>CyberScript</h3><p>Conceito de jogo em Godot com foco em cibersegurança e decisões durante crises.</p><span class="project-tech">Godot • GDScript • Pixel Art</span></div></article>
+          <article class="project-card"><div class="project-image"><img src="images/project-pipeline.svg" alt="Ilustração de uma esteira de integração e entrega contínuas" loading="lazy" width="620" height="350"></div><div class="project-content"><p class="project-type">AUTOMAÇÃO • DEVOPS</p><h3>Esteira CI/CD</h3><p>Validações automáticas em Pull Requests e publicação do portfólio com GitHub Pages.</p><span class="project-tech">GitHub Actions • Node.js</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact container" id="contato" aria-labelledby="contact-title">
+      <p class="section-kicker">04 / CONEXÕES</p><h2 id="contact-title">Vamos criar algo <span>incrível?</span></h2>
+      <p>Conheça meu trabalho e acompanhe os próximos projetos.</p>
+      <div class="contact-links"><a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>
+      <p class="contact-note">Substitua os links acima pelos endereços do seu perfil antes de entregar.</p>
+    </section>
+  </main>
+  <footer class="footer"><div class="container"><span>&lt;/&gt; Portfólio profissional</span><span>Feito com HTML, CSS e automação.</span></div></footer>
+</body>
+</html>

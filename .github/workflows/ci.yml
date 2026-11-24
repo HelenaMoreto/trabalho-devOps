@@ -1,0 +1,60 @@
+name: CI - Qualidade do Portfolio
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validar:
+    name: validar (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+    steps:
+      - name: Baixar o codigo
+        uses: actions/checkout@v4
+
+      - name: Verificar index.html primeiro
+        shell: bash
+        run: |
+          if [ ! -f index.html ]; then
+            echo 'ERRO: index.html nao encontrado na raiz.'
+            exit 1
+          fi
+
+      - name: Bloquear arquivos maiores que 500 KB
+        shell: bash
+        run: |
+          arquivos=$(find . -type f -not -path './.git/*' -size +500k -print)
+          if [ -n "$arquivos" ]; then
+            printf 'Arquivos excedem 500 KB:\n%s\n' "$arquivos"
+            exit 1
+          fi
+
+      - name: Bloquear termos proibidos no site
+        shell: bash
+        run: |
+          if grep -Ein 'TODO|FIXME|senha|password' index.html style.css; then
+            echo 'ERRO: termos proibidos encontrados.'
+            exit 1
+          fi
+
+      - name: Preparar Node.js ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm install --no-audit --no-fund
+
+      - name: Validar HTML com Linter
+        run: npm run lint
+
+      - name: Validar links e imagens
+        run: npm run check:links

@@ -1,0 +1,73 @@
+name: CD - Publicar no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    name: Publicar portfolio
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Baixar codigo aprovado
+        uses: actions/checkout@v4
+
+      - name: Verificar index.html
+        run: test -f index.html
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Preparar pasta publica
+        run: |
+          mkdir -p public
+          cp index.html style.css public/
+          cp -R images public/
+          touch public/.nojekyll
+
+      - name: Enviar artefato
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - name: Publicar site
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  notificar-falha:
+    name: Notificar falha no Discord
+    if: ${{ always() && needs.publicar.result == 'failure' }}
+    needs: publicar
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar aviso se webhook estiver configurado
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        shell: bash
+        run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo 'Sem webhook: GitHub Actions registra a falha normalmente.'
+            exit 0
+          fi
+          python3 - <<'PY'
+          import json, os, urllib.request
+          body = json.dumps({'content': f"❌ Falha ao publicar {os.environ['REPOSITORY']}! Veja: {os.environ['RUN_URL']}"}).encode()
+          req = urllib.request.Request(os.environ['DISCORD_WEBHOOK_URL'], data=body, headers={'Content-Type': 'application/json'}, method='POST')
+          with urllib.request.urlopen(req, timeout=20) as res:
+              print('Notificação enviada:', res.status)
+          PY
