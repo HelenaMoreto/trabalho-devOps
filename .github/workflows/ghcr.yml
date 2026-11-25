@@ -1,0 +1,40 @@
+name: Exercicio 8 - Publicar e testar imagem GHCR
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE: ghcr.io/helenamoreto/trabalho-devops:1.0
+    steps:
+      - uses: actions/checkout@v4
+      - name: Instalar Podman se necessario
+        run: command -v podman || (sudo apt-get update && sudo apt-get install -y podman)
+      - name: Login no GHCR
+        env:
+          GHCR_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: printf '%s' "$GHCR_TOKEN" | podman login ghcr.io -u "${{ github.actor }}" --password-stdin
+      - name: Build da imagem
+        run: podman build -t "$IMAGE" .
+      - name: Push para o Registry
+        run: podman push "$IMAGE"
+      - name: Remover imagem local
+        run: podman rmi "$IMAGE"
+      - name: Baixar imagem publicada e iniciar container na porta 9000
+        run: |
+          podman pull "$IMAGE"
+          podman run -d --name portfolio-final -p 9000:80 "$IMAGE"
+      - name: Verificar site servido pelo container
+        run: |
+          curl --retry 10 --retry-connrefused --retry-delay 2 -fsS http://localhost:9000/ -o resposta.html
+          grep -F 'Versão Final 1.0 - Helena' resposta.html
+          curl -fsS http://localhost:9000/style.css >/dev/null
+          curl -fsS http://localhost:9000/images/hero.svg >/dev/null
+      - name: Limpar container de teste
+        if: always()
+        run: podman rm -f portfolio-final || true
