@@ -30,7 +30,7 @@ jobs:
       - name: Bloquear arquivos maiores que 500 KB
         shell: bash
         run: |
-          arquivos=$(find . -type f -not -path './.git/*' -size +500k -print)
+          arquivos=$(find . -type f -not -path './.git/*' -size +500000c -print)
           if [ -n "$arquivos" ]; then
             printf 'Arquivos excedem 500 KB:\n%s\n' "$arquivos"
             exit 1
@@ -39,7 +39,7 @@ jobs:
       - name: Bloquear termos proibidos no site
         shell: bash
         run: |
-          if grep -Ein 'TODO|FIXME|senha|password' index.html style.css; then
+          if git grep -Ein 'TODO|FIXME|senha|password' -- '*.html' '*.css' '*.js' '*.svg'; then
             echo 'ERRO: termos proibidos encontrados.'
             exit 1
           fi
@@ -48,7 +48,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-          cache: npm
 
       - name: Instalar dependencias
         run: npm install --no-audit --no-fund
