@@ -1,14 +1,10 @@
+[![CI](https://github.com/HelenaMoreto/trabalho-devOps/actions/workflows/ci.yml/badge.svg?event=pull_request)](https://github.com/HelenaMoreto/trabalho-devOps/actions/workflows/ci.yml)
+[![CD](https://github.com/HelenaMoreto/trabalho-devOps/actions/workflows/deploy.yml/badge.svg)](https://github.com/HelenaMoreto/trabalho-devOps/actions/workflows/deploy.yml)
+
 # Portfólio Profissional | Trabalho de DevOps
 
-![Status do CI](https://github.com/SEU_USUARIO/SEU_REPOSITORIO/actions/workflows/ci.yml/badge.svg)
 
 Site estático com HTML e CSS, integração contínua em Pull Requests e publicação automática no GitHub Pages.
-
-## Personalização
-
-1. Troque o nome, descrições e projetos em `index.html` conforme necessário.
-2. Substitua os links genéricos para GitHub e LinkedIn pelos seus próprios perfis.
-3. Edite a primeira linha do README para deixar o **badge no topo** e substitua `SEU_USUARIO/SEU_REPOSITORIO` pelo caminho real do repositório.
 
 ## Comandos locais
 
@@ -39,6 +35,10 @@ npm run check:links
 1. Abra uma branch nova, como `teste-falha`, e faça uma alteração intencional em `index.html` (por exemplo, remova o fechamento `</h1>`). Abra um Pull Request para `main`, e tire um print da verificação CI vermelha. **Não faça merge do código quebrado.**
 2. Corrija o HTML no mesmo Pull Request. Aguarde o CI passar e realize o merge para `main`.
 3. Tire um print da aba **Actions** mostrando o deploy verde.
-4. Entregue o endereço exibido em **Settings → Pages**, normalmente `https://SEU_USUARIO.github.io/SEU_REPOSITORIO/`, além dos prints e do repositório.
+4. Entregue o endereço exibido em **Settings → Pages**, normalmente `https://helenamoreto.github.io/trabalho-devOps/`, além dos prints e do repositório.
 
 > **Atenção:** os prints reais, o link publicado e a configuração de proteção dependem de ações dentro do seu repositório GitHub; os arquivos do ZIP não simulam essas evidências.
+
+## Exercício 8
+
+Imagem: `ghcr.io/helenamoreto/trabalho-devops:1.0`. A publicação e o teste de download ocorrem no GitHub Actions após o merge da entrega final. Para rodar localmente: `podman run -d --name portfolio-final -p 9000:80 ghcr.io/helenamoreto/trabalho-devops:1.0`. Acesse http://localhost:9000. A etapa com o colega exige o endereço da imagem dele.
